@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Suero La Sabana · Cómo conservarlo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700;800&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --ink:#1b2b20; --muted:#4f6154; --green:#1d5c34; --green-soft:#e6f0e9; --gold:#c49a1a; --line:#d8e2db;
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f2216; --ink:#eef4ef; --muted:#b4c4b8; --green:#7fc99a; --green-soft:#183625; --gold:#e0b83a; --line:#2b4533; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f2216; --ink:#eef4ef; --muted:#b4c4b8; --green:#7fc99a; --green-soft:#183625; --gold:#e0b83a; --line:#2b4533; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 18px/1.55 "Alegreya Sans",Georgia,"Times New Roman",serif}
+.top{background:#1d5c34;color:#fff;padding:30px 22px 22px;border-bottom:6px solid #d9b13b}
+.top-in{max-width:520px;margin:0 auto}
+.top h1{margin:0;font-family:"Alegreya",Georgia,serif;font-weight:800;font-size:2.5rem;line-height:1.02;color:#fff}
+.top p{margin:10px 0 0;color:#e3efe6;font-size:1.05rem}
+main{max-width:520px;margin:0 auto;padding:6px 22px 40px}
+h2{font-family:"Alegreya",Georgia,serif;font-weight:700;font-size:1.55rem;color:var(--green);margin:34px 0 8px}
+.lead{margin:22px 0 0;font-size:1.1rem}
+ul.cons{list-style:none;margin:0;padding:0}
+ul.cons li{padding:12px 0 12px 22px;border-bottom:1px solid var(--line);position:relative}
+ul.cons li::before{content:"";position:absolute;left:2px;top:1.15em;width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
+ul.cons b{font-weight:700}
+.opts{display:flex;gap:8px;margin-top:6px}
+.opts button{flex:1;font:inherit;font-weight:700;padding:11px 4px;border:2px solid var(--green);background:transparent;color:var(--green);border-radius:6px;cursor:pointer;min-height:48px}
+.opts button[aria-pressed="true"]{background:var(--green);color:#fff}
+:root[data-theme="dark"] .opts button[aria-pressed="true"]{color:#0f2216}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .opts button[aria-pressed="true"]{color:#0f2216}}
+.opts button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+#info{margin:12px 0 0;color:var(--muted);min-height:3.2em}
+.fechas{margin:0;padding:14px 16px;background:var(--green-soft);border-left:5px solid var(--gold)}
+footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <h1>Suero La Sabana</h1>
+  <p>Suero costeño tradicional, hecho en Sucre.</p>
+</div></header>
+<main>
+  <p class="lead">Gracias por llevar nuestro suero. Con estos cuidados te va a durar más días y se mantiene sabroso.</p>
+
+  <h2>Cómo conservarlo</h2>
+  <ul class="cons">
+    <li><b>Siempre en la nevera.</b> Guárdalo refrigerado apenas llegues a la casa, entre 2 y 5 °C.</li>
+    <li><b>Una porción a la vez.</b> Saca solo la que vas a usar y deja las otras cerradas.</li>
+    <li><b>Cierra bien la bolsa.</b> Pasa el dedo por el cierre hasta que quede sellado.</li>
+    <li><b>Cuchara limpia.</b> Así no se agría antes de tiempo.</li>
+  </ul>
+
+  <h2>Tu acidez</h2>
+  <div class="opts" role="group" aria-label="Nivel de acidez">
+    <button type="button" data-k="suave" aria-pressed="true">Suave</button>
+    <button type="button" data-k="normal" aria-pressed="false">Normal</button>
+    <button type="button" data-k="fuerte" aria-pressed="false">Fuerte</button>
+  </div>
+  <p id="info"></p>
+
+  <h2>Tus 4 porciones</h2>
+  <p style="margin:0">Cada bolsa trae cuatro porciones individuales, todas con la misma acidez. Mira en la etiqueta cuál marcaste.</p>
+
+  <h2>Fechas</h2>
+  <p class="fechas">La fecha de elaboración y la de vencimiento están escritas en la etiqueta de tu bolsa.</p>
+
+</main>
+<script>
+(function(){
+  var t={
+    suave:"Sabor cremoso y poco ácido. Va bien con galletas y para los niños.",
+    normal:"El sabor costeño de siempre. Va bien con arroz, patacón y yuca.",
+    fuerte:"Más ácido y con carácter. Queda muy bien en sopas y fritos."
+  };
+  var info=document.getElementById("info"), bs=document.querySelectorAll(".opts button");
+  function pick(k){bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.k===k?"true":"false")});info.textContent=t[k];}
+  bs.forEach(function(b){b.addEventListener("click",function(){pick(b.dataset.k)})});
+  pick("suave");
+})();
+</script>
+</body>
+</html>
